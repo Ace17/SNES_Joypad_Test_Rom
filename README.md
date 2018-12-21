@@ -1,2 +1,14 @@
 # SNES_Joypad_Test_Rom
-SNES Joypad test rom source code, made with Optixx's SNES SDK
+This a simple SNES Joypad test rom source code, to test if your controllers correctly wotk.
+The code is made with Optixx's SNES SDK, forked by Ace17.
+
+The ROM compiles as follows:
+
+- First visit and clone https://github.com/Ace17/snes-sdk.git,
+- Follow the compilation and installation procedure,
+- Create a new directory and clone https://github.com/Modrigue/SNES_Joypad_Test_Rom.git,
+- cd joypad_test
+- make
+
+The compiled ROM is in the bin directory.
+
