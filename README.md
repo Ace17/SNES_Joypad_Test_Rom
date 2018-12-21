@@ -12,3 +12,6 @@ The ROM compiles as follows:
 
 The compiled ROM is in the bin directory.
 
+Note:
+The current maximum of handled controllers is 4.
+Super multitap (5 controllers) is not handled yet.
