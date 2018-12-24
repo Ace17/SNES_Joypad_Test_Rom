@@ -120,12 +120,12 @@ void capture_inputs()
       char num[1];
       char status[8];
 
-      sprintf(num, "%d", i + 1);
+      sprintf(num, "%i", i + 1);
       writestring("P", blockmap, posText, 0x3F6);
       writestring(num, blockmap, posText + 1, 0x3F6);
       setmap(0, (unsigned char*)blockmap);
 
-      sprintf(status, "%d", getjoystatus(i));
+      sprintf(status, "%X", getjoystatus(i));
       writestring(status, blockmap, posText + 0x040 + 0x003, 0x3F6);
       setmap(0, (unsigned char*)blockmap);
     }
@@ -158,7 +158,7 @@ int main()
   memcpy(pal, palette, 0x200);
 
   // header
-  writestring("*** JOYPAD TEST ***", blockmap, 0x020 + 0x006, 0x3F6);
+  writestring("*** JOYPAD TEST v0.2 ***", blockmap, 0x020 + 0x004, 0x3F6);
 
   // footer
   writestring("by Modrigue", blockmap, 0x300, 0x3F6);
