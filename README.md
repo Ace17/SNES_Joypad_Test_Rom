@@ -7,11 +7,10 @@ The ROM compiles as follows:
 - First visit and clone https://github.com/Ace17/snes-sdk.git,
 - Follow the compilation and installation procedure,
 - Create a new directory and clone https://github.com/Modrigue/SNES_Joypad_Test_Rom.git,
-- cd joypad_test
 - make
 
 The compiled ROM is in the bin directory.
 
-Note:
-The current maximum of handled controllers is 4.
-Super multitap (5 controllers) is not handled yet.
+Notes:
+- BUG: Joypad 4 not detected for now. Joypad 3 detected as Joypad 4.
+- Super multitap (5 controllers) is not handled yet.
