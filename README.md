@@ -1,5 +1,5 @@
 # SNES_Joypad_Test_Rom
-Use this simple SNES Joypad test rom to check if your controllers are correctly configured.
+Use this simple Super NES / Famicom Joypad test rom to check if your controllers are correctly configured.
 The code is made with Optixx's SNES SDK, forked by Ace17.
 
 The ROM compiles as follows:
