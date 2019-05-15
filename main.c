@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "snesc.h"
 #include "graph.h"
 #include "input.h"
@@ -19,8 +20,6 @@ unsigned int pal[0x100];
 
 static const char* LINE_BLANK = "                              ";
 
-typedef enum { false, true } boolean;
-
 unsigned int posTextInit = 0x080;
 
 void capture_inputs()
@@ -30,7 +29,7 @@ void capture_inputs()
   int i;
   for(i = 0; i < 4; i++) // super multitap not handled for now
   {
-    boolean joypadHasInput = false;
+    bool joypadHasInput = false;
 
     if(getjoystatus(i) & LEFT_BUTTON)
     {
