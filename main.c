@@ -29,79 +29,67 @@ void capture_inputs()
   int i;
   for(i = 0; i < 4; i++) // super multitap not handled for now
   {
-    bool joypadHasInput = false;
+    const int status = getjoystatus(i);
 
-    if(getjoystatus(i) & LEFT_BUTTON)
+    if(status & LEFT_BUTTON)
     {
       writestring("LEFT", blockmap, posText + 0x003, 0x3F6);
-      joypadHasInput = true;
     }
-    if(getjoystatus(i) & RIGHT_BUTTON)
+    if(status & RIGHT_BUTTON)
     {
       writestring("RIGHT", blockmap, posText + 0x008, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if(getjoystatus(i) & UP_BUTTON)
+    if(status & UP_BUTTON)
     {
       writestring("UP", blockmap, posText + 0x00E, 0x3F6);
-      joypadHasInput = true;
     }
-    if(getjoystatus(i) & DOWN_BUTTON)
+    if(status & DOWN_BUTTON)
     {
       writestring("DOWN", blockmap, posText + 0x011, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if(getjoystatus(i) & A_BUTTON)
+    if(status & A_BUTTON)
     {
       writestring("A", blockmap, posText + 0x016, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if(getjoystatus(i) & B_BUTTON)
+    if(status & B_BUTTON)
     {
       writestring("B", blockmap, posText + 0x018, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if(getjoystatus(i) & X_BUTTON)
+    if(status & X_BUTTON)
     {
       writestring("X", blockmap, posText + 0x01A, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if(getjoystatus(i) & Y_BUTTON)
+    if(status & Y_BUTTON)
     {
       writestring("Y", blockmap, posText + 0x01C, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if(getjoystatus(i) & START_BUTTON)
+    if(status & START_BUTTON)
     {
       writestring("START", blockmap, posText + 0x020 + 0x003, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if(getjoystatus(i) & SELECT_BUTTON)
+    if(status & SELECT_BUTTON)
     {
       writestring("SELECT", blockmap, posText + 0x020 + 0x009, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if(getjoystatus(i) & TL_BUTTON)
+    if(status & TL_BUTTON)
     {
       writestring("LB", blockmap, posText + 0x020 + 0x010, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if(getjoystatus(i) & TR_BUTTON)
+    if(status & TR_BUTTON)
     {
       writestring("RB", blockmap, posText + 0x020 + 0x013, 0x3F6);
-      joypadHasInput = true;
     }
 
-    if (joypadHasInput)
+    if (status)
     {
       // get joypad number and status
       char num[1];
@@ -111,7 +99,7 @@ void capture_inputs()
       writestring("P", blockmap, posText, 0x3F6);
       writestring(num, blockmap, posText + 1, 0x3F6);
 
-      sprintf(status, "%X", getjoystatus(i));
+      sprintf(status, "%X", status);
       writestring(status, blockmap, posText + 0x040 + 0x003, 0x3F6);
     }
     else
