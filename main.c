@@ -56,14 +56,14 @@ void capture_inputs()
     {
       // get joypad number and status
       char num[1];
-      char status[8];
+      char msg[8];
 
       sprintf(num, "%i", i + 1);
       writestring("P", blockmap, posText, 0x3F6);
       writestring(num, blockmap, posText + 1, 0x3F6);
 
-      sprintf(status, "%X", status);
-      writestring(status, blockmap, posText + 0x040 + 0x003, 0x3F6);
+      sprintf(msg, "%X", status);
+      writestring(msg, blockmap, posText + 0x040 + 0x003, 0x3F6);
     }
     else
     {
