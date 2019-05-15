@@ -55,22 +55,28 @@ void capture_inputs()
     if (status)
     {
       // get joypad number and status
-      char num[1];
-      char msg[8];
-
+      char num[8];
       sprintf(num, "%i", i + 1);
       writestring("P", blockmap, posText, 0x3F6);
       writestring(num, blockmap, posText + 1, 0x3F6);
-
-      sprintf(msg, "%X", status);
-      writestring(msg, blockmap, posText + 0x040 + 0x003, 0x3F6);
     }
     else
     {
       writestring(LINE_BLANK, blockmap, posText, 0x3F6);
       writestring(LINE_BLANK, blockmap, posText + 0x020, 0x3F6);
-      writestring(LINE_BLANK, blockmap, posText + 0x040, 0x3F6);
     }
+
+    {
+      char msg[8] = {0};
+      sprintf(msg, "%X", status);
+      int k;
+      for(k = 0;k < 4;k++)
+        if(msg[k] == 0)
+          msg[k] = '0';
+
+      writestring(msg, blockmap, posText + 0x040 + 0x003, 0x3F6);
+    }
+
     clearjoy(i);
 
     // display next joypad inputs
