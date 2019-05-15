@@ -35,82 +35,70 @@ void capture_inputs()
     if(getjoystatus(i) & LEFT_BUTTON)
     {
       writestring("LEFT", blockmap, posText + 0x003, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
     if(getjoystatus(i) & RIGHT_BUTTON)
     {
       writestring("RIGHT", blockmap, posText + 0x008, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
     if(getjoystatus(i) & UP_BUTTON)
     {
       writestring("UP", blockmap, posText + 0x00E, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
     if(getjoystatus(i) & DOWN_BUTTON)
     {
       writestring("DOWN", blockmap, posText + 0x011, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
     if(getjoystatus(i) & A_BUTTON)
     {
       writestring("A", blockmap, posText + 0x016, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
     if(getjoystatus(i) & B_BUTTON)
     {
       writestring("B", blockmap, posText + 0x018, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
     if(getjoystatus(i) & X_BUTTON)
     {
       writestring("X", blockmap, posText + 0x01A, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
     if(getjoystatus(i) & Y_BUTTON)
     {
       writestring("Y", blockmap, posText + 0x01C, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
     if(getjoystatus(i) & START_BUTTON)
     {
       writestring("START", blockmap, posText + 0x020 + 0x003, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
     if(getjoystatus(i) & SELECT_BUTTON)
     {
       writestring("SELECT", blockmap, posText + 0x020 + 0x009, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
     if(getjoystatus(i) & TL_BUTTON)
     {
       writestring("LB", blockmap, posText + 0x020 + 0x010, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
     if(getjoystatus(i) & TR_BUTTON)
     {
       writestring("RB", blockmap, posText + 0x020 + 0x013, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
       joypadHasInput = true;
     }
 
@@ -123,24 +111,23 @@ void capture_inputs()
       sprintf(num, "%i", i + 1);
       writestring("P", blockmap, posText, 0x3F6);
       writestring(num, blockmap, posText + 1, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
 
       sprintf(status, "%X", getjoystatus(i));
       writestring(status, blockmap, posText + 0x040 + 0x003, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
     }
     else
     {
       writestring(LINE_BLANK, blockmap, posText, 0x3F6);
       writestring(LINE_BLANK, blockmap, posText + 0x020, 0x3F6);
       writestring(LINE_BLANK, blockmap, posText + 0x040, 0x3F6);
-      setmap(0, (unsigned char*)blockmap);
     }
     clearjoy(i);
 
     // display next joypad inputs
     posText += 0x080;
   }
+
+  setmap(0, (unsigned char*)blockmap);
 }
 
 void idle()
