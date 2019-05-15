@@ -22,9 +22,12 @@ static const char* LINE_BLANK = "                              ";
 
 unsigned int posTextInit = 0x080;
 
-void display_string(const char* s, int pos)
+void display_string(const char* s, int pos, int flag)
 {
-  writestring(s, blockmap, pos, 0x3F6);
+  if(flag)
+    writestring(s, blockmap, pos, 0x3F6);
+  else
+    writestring(s, blockmap, pos, 0x3F6 - 0x100);
 }
 
 void capture_inputs()
@@ -36,63 +39,18 @@ void capture_inputs()
   {
     const int status = getjoystatus(i);
 
-    if(status & LEFT_BUTTON)
-    {
-      display_string("LEFT", posText + 0x003);
-    }
-    if(status & RIGHT_BUTTON)
-    {
-      display_string("RIGHT", posText + 0x008);
-    }
-
-    if(status & UP_BUTTON)
-    {
-      display_string("UP", posText + 0x00E);
-    }
-    if(status & DOWN_BUTTON)
-    {
-      display_string("DOWN", posText + 0x011);
-    }
-
-    if(status & A_BUTTON)
-    {
-      display_string("A", posText + 0x016);
-    }
-
-    if(status & B_BUTTON)
-    {
-      display_string("B", posText + 0x018);
-    }
-
-    if(status & X_BUTTON)
-    {
-      display_string("X", posText + 0x01A);
-    }
-
-    if(status & Y_BUTTON)
-    {
-      display_string("Y", posText + 0x01C);
-    }
-
-    if(status & START_BUTTON)
-    {
-      display_string("START", posText + 0x020 + 0x003);
-    }
-
-    if(status & SELECT_BUTTON)
-    {
-      display_string("SELECT", posText + 0x020 + 0x009);
-    }
-
-    if(status & TL_BUTTON)
-    {
-      display_string("LB", posText + 0x020 + 0x010);
-    }
-
-    if(status & TR_BUTTON)
-    {
-      display_string("RB", posText + 0x020 + 0x013);
-    }
+    display_string("LEFT", posText + 0x003, status & LEFT_BUTTON);
+    display_string("RIGHT", posText + 0x008, status & RIGHT_BUTTON);
+    display_string("UP", posText + 0x00E, status & UP_BUTTON);
+    display_string("DOWN", posText + 0x011, status & DOWN_BUTTON);
+    display_string("A", posText + 0x016, status & A_BUTTON);
+    display_string("B", posText + 0x018, status & B_BUTTON);
+    display_string("X", posText + 0x01A, status & X_BUTTON);
+    display_string("Y", posText + 0x01C, status & Y_BUTTON);
+    display_string("START", posText + 0x020 + 0x003, status & START_BUTTON);
+    display_string("SELECT", posText + 0x020 + 0x009, status & SELECT_BUTTON);
+    display_string("LB", posText + 0x020 + 0x010, status & TL_BUTTON);
+    display_string("RB", posText + 0x020 + 0x013, status & TR_BUTTON);
 
     if (status)
     {
