@@ -14,7 +14,7 @@ unsigned int snesc_oam_table2[16];  /* OAM high table */
 
 unsigned char snesc_palette[512];   /* palette */
 
-unsigned int snesc_controllers[4];  // data from controllers
+unsigned int snesc_controllers[8];  // data from controllers
 
 struct dma_transfer snesc_dma_transfers[64]; /* DMA transfers
                                                 0 (src_addr, src_bank) src address (24 bit)
@@ -51,6 +51,9 @@ u16 portData2;
 
 void read_port(u16 reg)
 {
+  *((u8*)REG_JOYSER0) = 1;
+  *((u8*)REG_JOYSER0) = 0;
+
   portData1 = 0;
   portData2 = 0;
 
@@ -69,18 +72,27 @@ void read_port(u16 reg)
 
 void update_joypads()
 {
-  u16 reg[] = { REG_JOYSER0, REG_JOYSER1 };
+  u16 reg[] = { 0, 0 };
 
-  *((u8*)REG_JOYSER0) = 1;
-  *((u8*)REG_JOYSER0) = 0;
+  *((u8*)REG_WRIO) |= 0xc0;
 
   read_port(REG_JOYSER0);
   snesc_controllers[0] = portData1;
-  snesc_controllers[3] = portData2;
+  snesc_controllers[5] = portData2;
 
   read_port(REG_JOYSER1);
   snesc_controllers[1] = portData1;
   snesc_controllers[2] = portData2;
+
+  *((u8*)REG_WRIO) &= 0xc0;
+
+  read_port(REG_JOYSER0);
+  snesc_controllers[6] = portData1;
+  snesc_controllers[7] = portData2;
+
+  read_port(REG_JOYSER1);
+  snesc_controllers[3] = portData1;
+  snesc_controllers[4] = portData2;
 }
 
 void snesc_vblank(void)

@@ -3,7 +3,7 @@
 
 int getjoycount()
 {
-  return 4;
+  return 8;
 }
 
 unsigned int getjoystatus(int j)
