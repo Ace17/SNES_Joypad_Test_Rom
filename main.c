@@ -7,11 +7,7 @@
 #include "input.h"
 
 extern unsigned char tiles1[];
-extern unsigned char tiles2[];
-extern unsigned char bg1map[];
-extern unsigned char bg2map[];
 extern unsigned char palette[];
-extern unsigned char backpal[];
 
 unsigned int blockmap[0x400];
 //unsigned int backmap[0x400];
