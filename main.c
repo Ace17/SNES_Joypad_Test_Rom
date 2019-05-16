@@ -10,9 +10,7 @@ extern unsigned char tiles1[];
 extern unsigned char palette[];
 
 unsigned int blockmap[0x400];
-//unsigned int backmap[0x400];
 unsigned int pal[0x100];
-//unsigned char blocks[0x64];
 
 static const char* LINE_BLANK = "                              ";
 
