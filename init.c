@@ -46,6 +46,19 @@ void do_dma(unsigned char do_flags)
   }
 }
 
+void update_joypads()
+{
+  /* update input buffers */
+  while(peek(REG_HVBJOY) & 1)
+  {
+  }
+
+  snesc_controllers[0] = ((unsigned short*)REG_JOY1L)[0];
+  snesc_controllers[1] = ((unsigned short*)REG_JOY2L)[0];
+  snesc_controllers[2] = ((unsigned short*)REG_JOY3L)[0];
+  snesc_controllers[3] = ((unsigned short*)REG_JOY4L)[0];
+}
+
 void snesc_vblank(void)
 {
   /* stuff pending for DMA? */
@@ -89,17 +102,7 @@ void snesc_vblank(void)
     }
   }
 
-  while(peek(REG_STATUS) & 1)
-  {
-  }
-
-  /* update input buffers */
-  unsigned int pad;
-
-  for(pad = 0; pad < 4; pad++)
-  {
-    snesc_controllers[pad] |= ((unsigned short*)REG_JOY1_STATUS)[pad];
-  }
+  update_joypads();
 
   /* timer ticks */
   unsigned char timers_enabled = snesc_timer_enabled;
@@ -117,7 +120,7 @@ void snesc_init(void)
 {
   int i;
   __nmi_handler = snesc_vblank; /* register vblank handler */
-  *((unsigned char*)REG_COUNTERENABLE) = 0x81; /* enable NMI, enable autojoy */
+  *((unsigned char*)REG_NMITIMEN) = 0x81; /* enable NMI, enable autojoy */
   snesc_timer_enabled = snesc_do_copy = snesc_controllers[0] = 0;
 
   /* snesc sprite init stuff */
