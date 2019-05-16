@@ -46,52 +46,41 @@ void do_dma(unsigned char do_flags)
   }
 }
 
-typedef struct
-{
-  u16 data1, data2;
-} PortData;
-
-PortData portData;
+u16 portData1;
+u16 portData2;
 
 void read_port(u16 reg)
 {
-  portData.data1 = 0;
-  portData.data2 = 0;
+  portData1 = 0;
+  portData2 = 0;
 
   int i;
   for(i=0;i<16;++i)
   {
     const u8 data = ((u8*)reg)[0];
 
-    portData.data1 <<= 1;
-    portData.data1 |= (data>>0)&1;
+    portData1 <<= 1;
+    portData1 |= (data>>0)&1;
 
-    portData.data2 <<= 1;
-    portData.data2 |= (data>>1)&1;
+    portData2 <<= 1;
+    portData2 |= (data>>1)&1;
   }
 }
 
 void update_joypads()
 {
-  PortData serial_data[2]; // [port]
-
   u16 reg[] = { REG_JOYSER0, REG_JOYSER1 };
 
   *((u8*)REG_JOYSER0) = 1;
   *((u8*)REG_JOYSER0) = 0;
 
   read_port(REG_JOYSER0);
-  serial_data[0].data1 = portData.data1;
-  serial_data[0].data2 = portData.data2;
+  snesc_controllers[0] = portData1;
+  snesc_controllers[3] = portData2;
 
   read_port(REG_JOYSER1);
-  serial_data[1].data1 = portData.data1;
-  serial_data[1].data2 = portData.data2;
-
-  snesc_controllers[0] = serial_data[0].data1;
-  snesc_controllers[1] = serial_data[1].data1;
-  snesc_controllers[2] = serial_data[1].data2;
-  snesc_controllers[3] = serial_data[0].data2;
+  snesc_controllers[1] = portData1;
+  snesc_controllers[2] = portData2;
 }
 
 void snesc_vblank(void)
