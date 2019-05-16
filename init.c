@@ -48,15 +48,38 @@ void do_dma(unsigned char do_flags)
 
 void update_joypads()
 {
-  /* update input buffers */
-  while(peek(REG_HVBJOY) & 1)
+  u16 serial_data1[2]; // [port]
+  u16 serial_data2[2]; // [port]
+
+  *((u8*)REG_JOYSER0) |= 1;
+  *((u8*)REG_JOYSER0) &= ~1;
+
+  int port;
+  for(port=0;port < 2;++port)
   {
+    u16 d1 = 0;
+    u16 d2 = 0;
+
+    int i;
+    for(i=0;i<16;++i)
+    {
+      const u8 data = ((u8*)REG_JOYSER0)[port];
+
+      d1 <<= 1;
+      d1 |= (data>>0)&1;
+
+      d2 <<= 1;
+      d2 |= (data>>1)&1;
+    }
+
+    serial_data1[port] = d1;
+    serial_data2[port] = d2;
   }
 
-  snesc_controllers[0] = ((unsigned short*)REG_JOY1L)[0];
-  snesc_controllers[1] = ((unsigned short*)REG_JOY2L)[0];
-  snesc_controllers[2] = ((unsigned short*)REG_JOY3L)[0];
-  snesc_controllers[3] = ((unsigned short*)REG_JOY4L)[0];
+  snesc_controllers[0] = serial_data1[0];
+  snesc_controllers[1] = serial_data1[1];
+  snesc_controllers[2] = serial_data2[1];
+  snesc_controllers[3] = serial_data2[0];
 }
 
 void snesc_vblank(void)
@@ -120,7 +143,7 @@ void snesc_init(void)
 {
   int i;
   __nmi_handler = snesc_vblank; /* register vblank handler */
-  *((unsigned char*)REG_NMITIMEN) = 0x81; /* enable NMI, enable autojoy */
+  *((unsigned char*)REG_NMITIMEN) = 0x80; /* enable NMI */
   snesc_timer_enabled = snesc_do_copy = snesc_controllers[0] = 0;
 
   /* snesc sprite init stuff */
