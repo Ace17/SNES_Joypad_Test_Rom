@@ -4,6 +4,7 @@
 // https://wiki.superfamicom.org/registers
 
 #define REG_NMITIMEN            0x4200
+#define REG_WRIO                0x4201
 
 #define REG_HVBJOY              0x4212 // PPU Status Register
 #define REG_RDIO                0x4213 // IO Port Read Register
