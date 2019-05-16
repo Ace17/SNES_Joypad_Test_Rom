@@ -13,5 +13,6 @@
 #define Y_BUTTON 0x4000
 #define B_BUTTON 0x8000
 
+int getjoycount();
 unsigned int getjoystatus(int j);
 void clearjoy(int j);

@@ -14,7 +14,7 @@ unsigned int snesc_oam_table2[16];  /* OAM high table */
 
 unsigned char snesc_palette[512];   /* palette */
 
-unsigned int snesc_controllers[4];  /* data from 4 controllers */
+unsigned int snesc_controllers[4];  // data from controllers
 
 struct dma_transfer snesc_dma_transfers[64]; /* DMA transfers
                                                 0 (src_addr, src_bank) src address (24 bit)

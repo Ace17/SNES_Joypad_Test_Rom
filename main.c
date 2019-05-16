@@ -20,7 +20,7 @@ unsigned int pal[0x100];
 
 static const char* LINE_BLANK = "                              ";
 
-unsigned int posTextInit = 0x080;
+unsigned int posTextInit = 0x060;
 
 void display_string(const char* s, int pos, int flag)
 {
@@ -32,10 +32,10 @@ void display_string(const char* s, int pos, int flag)
 
 void capture_inputs()
 {
-  unsigned int posText = posTextInit;
+  unsigned int posText = posTextInit + 1;
 
   int i;
-  for(i = 0; i < 4; i++) // super multitap not handled for now
+  for(i = 0; i < getjoycount(); i++) // super multitap not handled for now
   {
     const int status = getjoystatus(i);
 
@@ -52,17 +52,10 @@ void capture_inputs()
     display_string("LB", posText + 0x020 + 0x010, status & TL_BUTTON);
     display_string("RB", posText + 0x020 + 0x013, status & TR_BUTTON);
 
-    if (status)
     {
-      // get joypad number and status
       char num[8];
       sprintf(num, "P%i", i + 1);
       writestring(num, blockmap, posText, 0x3F6);
-    }
-    else
-    {
-      writestring(LINE_BLANK, blockmap, posText, 0x3F6);
-      writestring(LINE_BLANK, blockmap, posText + 0x020, 0x3F6);
     }
 
     {
@@ -79,7 +72,7 @@ void capture_inputs()
     clearjoy(i);
 
     // display next joypad inputs
-    posText += 0x080;
+    posText += 0x060;
   }
 
   setmap(0, (unsigned char*)blockmap);
