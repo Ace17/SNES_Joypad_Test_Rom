@@ -51,34 +51,42 @@ typedef struct
   u16 data1, data2;
 } PortData;
 
+PortData portData;
+
+void read_port(u16 reg)
+{
+  portData.data1 = 0;
+  portData.data2 = 0;
+
+  int i;
+  for(i=0;i<16;++i)
+  {
+    const u8 data = ((u8*)reg)[0];
+
+    portData.data1 <<= 1;
+    portData.data1 |= (data>>0)&1;
+
+    portData.data2 <<= 1;
+    portData.data2 |= (data>>1)&1;
+  }
+}
+
 void update_joypads()
 {
   PortData serial_data[2]; // [port]
 
+  u16 reg[] = { REG_JOYSER0, REG_JOYSER1 };
+
   *((u8*)REG_JOYSER0) = 1;
   *((u8*)REG_JOYSER0) = 0;
 
-  u16 reg[] = { REG_JOYSER0, REG_JOYSER1 };
+  read_port(REG_JOYSER0);
+  serial_data[0].data1 = portData.data1;
+  serial_data[0].data2 = portData.data2;
 
-  int port;
-  for(port=0;port < 2;++port)
-  {
-    PortData d = { 0, 0 };
-
-    int i;
-    for(i=0;i<16;++i)
-    {
-      const u8 data = *((u8*)reg[port]);
-
-      d.data1 <<= 1;
-      d.data1 |= (data>>0)&1;
-
-      d.data2 <<= 1;
-      d.data2 |= (data>>1)&1;
-    }
-
-    serial_data[port] = d;
-  }
+  read_port(REG_JOYSER1);
+  serial_data[1].data1 = portData.data1;
+  serial_data[1].data2 = portData.data2;
 
   snesc_controllers[0] = serial_data[0].data1;
   snesc_controllers[1] = serial_data[1].data1;
