@@ -55,8 +55,8 @@ void update_joypads()
 {
   PortData serial_data[2]; // [port]
 
-  *((u8*)REG_JOYSER0) |= 1;
-  *((u8*)REG_JOYSER0) &= ~1;
+  *((u8*)REG_JOYSER0) = 1;
+  *((u8*)REG_JOYSER0) = 0;
 
   u16 reg[] = { REG_JOYSER0, REG_JOYSER1 };
 
