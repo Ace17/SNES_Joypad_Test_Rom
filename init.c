@@ -63,23 +63,21 @@ void update_joypads()
   int port;
   for(port=0;port < 2;++port)
   {
-    u16 d1 = 0;
-    u16 d2 = 0;
+    PortData d = { 0, 0 };
 
     int i;
     for(i=0;i<16;++i)
     {
       const u8 data = *((u8*)reg[port]);
 
-      d1 <<= 1;
-      d1 |= (data>>0)&1;
+      d.data1 <<= 1;
+      d.data1 |= (data>>0)&1;
 
-      d2 <<= 1;
-      d2 |= (data>>1)&1;
+      d.data2 <<= 1;
+      d.data2 |= (data>>1)&1;
     }
 
-    serial_data[port].data1 = d1;
-    serial_data[port].data2 = d2;
+    serial_data[port] = d;
   }
 
   snesc_controllers[0] = serial_data[0].data1;
